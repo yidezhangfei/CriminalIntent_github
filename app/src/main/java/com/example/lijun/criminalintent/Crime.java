@@ -1,5 +1,8 @@
 package com.example.lijun.criminalintent;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DateFormat;
 import java.text.FieldPosition;
 import java.text.Format;
@@ -11,6 +14,12 @@ import java.util.UUID;
  * Created by lijun on 15/12/9.
  */
 public class Crime {
+
+    private static final String JSON_ID = "id";
+    private static final String JSON_TITLE = "title";
+    private static final String JSON_DATE = "date";
+    private static final String JSON_SOLVED = "solved";
+
     private UUID mId;
     private String mTitle;
     private Date mDate;
@@ -52,6 +61,15 @@ public class Crime {
 
     public void setSolved(boolean solved) {
         mSolved = solved;
+    }
+
+    public JSONObject toJSON() throws JSONException {
+        JSONObject object = new JSONObject();
+        object.put(JSON_ID, mId.toString());
+        object.put(JSON_DATE, mDate.getTime());
+        object.put(JSON_TITLE, mTitle);
+        object.put(JSON_SOLVED, mSolved);
+        return object;
     }
 
     public Crime() {
