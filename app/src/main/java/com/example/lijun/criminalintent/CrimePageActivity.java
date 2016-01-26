@@ -1,10 +1,10 @@
 package com.example.lijun.criminalintent;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -20,12 +20,19 @@ public class CrimePageActivity extends AppCompatActivity {
     private ArrayList<Crime> mCrimes;
 
     @Override
-    public void onCreate(Bundle savedInstenceState) {
-        super.onCreate(savedInstenceState);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         mViewPager = new ViewPager(this);
         mViewPager.setId(R.id.viewPager);
+
         setContentView(mViewPager);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null)
+                actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         mCrimes = CrimeLab.getInstance(this).getCrimes();
 
