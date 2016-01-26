@@ -18,6 +18,10 @@ public class CrimeLab {
         return mCrimes;
     }
 
+    public void addCrime(Crime crime) {
+        mCrimes.add(crime);
+    }
+
     public Crime getCrime(UUID id) {
         for (Crime c : mCrimes) {
             if (c.getId().equals(id))
@@ -35,12 +39,6 @@ public class CrimeLab {
 
     private CrimeLab(Context context) {
         mAppContext = context;
-        mCrimes = new ArrayList<Crime>();
-        for (int i = 0; i < 100; i++) {
-            Crime c = new Crime();
-            c.setTitle("Crime #" + i);
-            c.setSolved(i % 2 == 0);  // Every other one , fortest
-            mCrimes.add(c);
-        }
+        mCrimes = new ArrayList<>();
     }
 }
