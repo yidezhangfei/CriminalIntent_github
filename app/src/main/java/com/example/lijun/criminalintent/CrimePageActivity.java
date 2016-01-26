@@ -2,6 +2,7 @@ package com.example.lijun.criminalintent;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -29,9 +30,11 @@ public class CrimePageActivity extends AppCompatActivity {
         setContentView(mViewPager);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null)
-                actionBar.setDisplayHomeAsUpEnabled(true);
+            if (NavUtils.getParentActivityName(this) != null) {
+                ActionBar actionBar = getSupportActionBar();
+                if (actionBar != null)
+                    actionBar.setDisplayHomeAsUpEnabled(true);
+            }
         }
 
         mCrimes = CrimeLab.getInstance(this).getCrimes();
