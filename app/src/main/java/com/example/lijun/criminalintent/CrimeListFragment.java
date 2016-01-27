@@ -3,6 +3,8 @@ package com.example.lijun.criminalintent;
 import android.support.v4.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,6 +40,17 @@ public class CrimeListFragment extends ListFragment {
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup,
+                             Bundle savedInstanceBundle) {
+        View view = super.onCreateView(inflater, viewGroup, savedInstanceBundle);
+
+        ListView listView = (ListView) view.findViewById(android.R.id.list);
+        registerForContextMenu(listView);
+
+        return view;
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_crime_list, menu);
@@ -66,6 +79,11 @@ public class CrimeListFragment extends ListFragment {
         Intent intent = new Intent(getActivity(), CrimePageActivity.class);
         intent.putExtra(CrimeFragment.EXTRA_CRIME_ID, crime.getId());
         startActivity(intent);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo info) {
+        getActivity().getMenuInflater().inflate(R.menu.crime_item_delete_crime, menu);
     }
 
     @Override
