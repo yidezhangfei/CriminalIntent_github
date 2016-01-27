@@ -31,6 +31,10 @@ public class CrimeLab {
         mCrimes.add(crime);
     }
 
+    public void deleteCrime(Crime crime) {
+        mCrimes.remove(crime);
+    }
+
     public Crime getCrime(UUID id) {
         for (Crime c : mCrimes) {
             if (c.getId().equals(id))
