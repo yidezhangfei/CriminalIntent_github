@@ -1,6 +1,6 @@
 package com.example.lijun.criminalintent;
 
-import android.graphics.Camera;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -34,5 +34,21 @@ public class CrimeCameraFragment extends Fragment {
         mSurfaceView = (SurfaceView) view.findViewById(R.id.crime_camera_surfaceView);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mCamera = Camera.open();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (mCamera != null) {
+            mCamera.release();
+            mCamera = null;
+        }
     }
 }
