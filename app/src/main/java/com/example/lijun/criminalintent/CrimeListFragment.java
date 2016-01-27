@@ -1,5 +1,7 @@
 package com.example.lijun.criminalintent;
 
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.app.ListFragment;
 import android.content.Intent;
@@ -31,6 +33,10 @@ public class CrimeListFragment extends ListFragment {
 
     private ArrayList<Crime> mCrimes;
 
+    private Drawable mItemBackground;
+
+    private static boolean mIsCacheOriginBackground = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +55,7 @@ public class CrimeListFragment extends ListFragment {
                              Bundle savedInstanceBundle) {
         View view = super.onCreateView(inflater, viewGroup, savedInstanceBundle);
 
-        ListView listView = (ListView) view.findViewById(android.R.id.list);
+        final ListView listView = (ListView) view.findViewById(android.R.id.list);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
             registerForContextMenu(listView);
@@ -59,6 +65,9 @@ public class CrimeListFragment extends ListFragment {
                 public void onItemCheckedStateChanged(ActionMode mode, int position,
                                                       long id, boolean checked) {
                     Log.v("lijun----", "item: " + position + "has been checked: " + checked);
+
+                    // 通知Adapter 调用刷新页面调用getView
+                    ((CrimeAdapter)getListAdapter()).notifyDataSetChanged();
                 }
 
                 // ActionMode.Callback Method.
@@ -184,6 +193,17 @@ public class CrimeListFragment extends ListFragment {
                     R.id.crime_list_item_solvedCheckBox);
             solvedCheckBox.setChecked(c.isSolved());
 
+            if (mIsCacheOriginBackground == false) {
+                mItemBackground = converView.getBackground();
+                mIsCacheOriginBackground = true;
+            }
+
+            if (getListView().isItemChecked(position)) {
+                converView.setBackgroundColor(getResources()
+                        .getColor(android.R.color.holo_red_light));
+            } else {
+                converView.setBackground(mItemBackground);
+            }
             return converView;
         }
     }
