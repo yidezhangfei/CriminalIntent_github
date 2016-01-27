@@ -9,6 +9,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
         <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="19"/>
+        <uses-permission android:name="android.permission.CAMERA"/>
+        <uses-feature> android:name="android.graphics.Camera"></uses-feature>
         <activity
             android:name=".CrimeListActivity"
             >
@@ -25,6 +27,9 @@
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value=".CrimeListActivity"/>
         </activity>
+        <activity android:name=".CrimeCameraActivity"
+            android:screenOrientation="landscape"
+            android:label="@string/app_name"/>
     </application>
 
 </manifest>
