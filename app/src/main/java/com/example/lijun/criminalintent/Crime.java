@@ -72,6 +72,11 @@ public class Crime {
         return object;
     }
 
+    @Override
+    public String toString() {
+        return mTitle;
+    }
+
     public Crime() {
         // 生成唯一标识符
         mId = UUID.randomUUID();
@@ -79,8 +84,11 @@ public class Crime {
         mDateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.SHORT);
     }
 
-    @Override
-    public String toString() {
-        return mTitle;
+    public Crime(JSONObject object) throws JSONException {
+        mId = UUID.fromString(object.getString(JSON_ID));
+        mTitle = object.getString(JSON_TITLE);
+        mDate = new Date(object.getLong(JSON_DATE));
+        mSolved = object.getBoolean(JSON_SOLVED);
+        mDateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.SHORT);
     }
 }

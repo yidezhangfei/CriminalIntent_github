@@ -3,6 +3,9 @@ package com.example.lijun.criminalintent;
 import android.content.Context;
 import android.util.Log;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -43,12 +46,6 @@ public class CrimeLab {
         return ourInstance;
     }
 
-    private CrimeLab(Context context) {
-        mAppContext = context;
-        mCrimes = new ArrayList<>();
-        mSerializer = new CriminalIntentJSONSerializer(mAppContext, FILENAME);
-    }
-
     public boolean saveCrimes() {
         try {
             mSerializer.saveCrimes(mCrimes);
@@ -57,6 +54,18 @@ public class CrimeLab {
         } catch (Exception e) {
             Log.e(TAG, "Error saving crimes: ", e);
             return false;
+        }
+    }
+
+    private CrimeLab(Context context) {
+        mAppContext = context;
+        mSerializer = new CriminalIntentJSONSerializer(mAppContext, FILENAME);
+
+        try {
+            mCrimes = mSerializer.loadCrimes();
+        } catch (Exception e){
+            mCrimes = new ArrayList<>();
+            Log.e(TAG, "Error loading crimes: ", e);
         }
     }
 }
